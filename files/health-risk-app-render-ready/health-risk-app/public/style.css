@@ -1,0 +1,312 @@
+/* style.css
+   設計方向：健康追蹤主題，避免常見AI生成樣板（米色襯線 / 純黑霓光配色）。
+   改用：霧灰藍背景 + 深松石綠主色，標題用襯線字體帶一點溫度，
+   數據（睡眠/步數/心情）用等寬字體，呼應「被測量、被記錄」的日誌感。
+*/
+
+:root {
+  --bg: #eef1ee;
+  --paper: #ffffff;
+  --ink: #1f2b29;
+  --ink-soft: #5b6b67;
+  --line: #d8ddd6;
+  --accent: #1f6f5c;
+  --accent-soft: #e3efe9;
+
+  --risk-low-bg: #e3f3e6;
+  --risk-low-fg: #1f7a3f;
+  --risk-mid-bg: #fdf1d8;
+  --risk-mid-fg: #9a6b0a;
+  --risk-high-bg: #fbe4e2;
+  --risk-high-fg: #b3372b;
+
+  --font-display: 'Source Serif 4', serif;
+  --font-body: 'Noto Sans TC', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+.page-header {
+  margin-bottom: 32px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin: 0 0 10px;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 34px;
+  margin: 0 0 12px;
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  color: var(--ink-soft);
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 560px;
+}
+
+/* ---------- 目前風險區塊 ---------- */
+.current-risk {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+}
+
+.risk-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  background: #eee;
+  color: var(--ink-soft);
+  flex-shrink: 0;
+}
+
+.risk-badge[data-level="低"] { background: var(--risk-low-bg); color: var(--risk-low-fg); }
+.risk-badge[data-level="中"] { background: var(--risk-mid-bg); color: var(--risk-mid-fg); }
+.risk-badge[data-level="高"] { background: var(--risk-high-bg); color: var(--risk-high-fg); }
+
+.risk-label {
+  margin: 0 0 4px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.risk-detail {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.decision-path {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+.decision-path li::marker {
+  color: var(--accent);
+  font-family: var(--font-mono);
+}
+
+/* ---------- 趨勢圖表 ---------- */
+.chart-panel {
+  margin-bottom: 24px;
+}
+
+.legend {
+  display: flex;
+  gap: 14px;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.legend-item i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.chart-fallback {
+  font-size: 13px;
+  color: var(--ink-soft);
+  text-align: center;
+  padding: 30px 0;
+  margin: 0;
+}
+
+/* ---------- 主版面 ---------- */
+.layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 720px) {
+  .layout { grid-template-columns: 1fr; }
+}
+
+.panel {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 24px;
+}
+
+.panel h2 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  margin: 0 0 18px;
+  font-weight: 600;
+}
+
+/* ---------- 表單 ---------- */
+#log-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+#log-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+#log-form input {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: #fbfcfb;
+}
+
+#log-form input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+#log-form button {
+  margin-top: 6px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+
+#log-form button:hover { background: #185c4c; }
+
+.form-status {
+  font-size: 13px;
+  margin: 0;
+  min-height: 18px;
+  color: var(--accent);
+}
+.form-status.error { color: var(--risk-high-fg); }
+
+/* ---------- 歷史紀錄表格 ---------- */
+.panel-header-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.record-count {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.table-scroll {
+  max-height: 480px;
+  overflow-y: auto;
+  margin-top: 6px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background: var(--paper);
+  text-align: left;
+  color: var(--ink-soft);
+  font-weight: 500;
+  padding: 8px 6px;
+  border-bottom: 1px solid var(--line);
+}
+
+tbody td {
+  padding: 9px 6px;
+  border-bottom: 1px solid #eef0ed;
+  font-family: var(--font-mono);
+  color: var(--ink);
+}
+
+.empty-row {
+  text-align: center;
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  padding: 24px 0;
+}
+
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.tag[data-level="低"] { background: var(--risk-low-bg); color: var(--risk-low-fg); }
+.tag[data-level="中"] { background: var(--risk-mid-bg); color: var(--risk-mid-fg); }
+.tag[data-level="高"] { background: var(--risk-high-bg); color: var(--risk-high-fg); }
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: var(--ink-soft);
+  cursor: pointer;
+  font-size: 12px;
+  font-family: var(--font-body);
+  text-decoration: underline;
+  padding: 0;
+}
+.delete-btn:hover { color: var(--risk-high-fg); }

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>健康日誌與風險評估</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;600&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="page-header">
+      <p class="eyebrow">SELF-TRACKING JOURNAL</p>
+      <h1>健康日誌與風險評估</h1>
+      <p class="subtitle">記錄睡眠、步數與心情，決策樹會依序判斷三項指標，估算目前的健康風險等級。</p>
+    </header>
+
+    <section class="current-risk" id="current-risk-section">
+      <div class="risk-badge-wrap">
+        <span class="risk-badge" id="risk-badge" data-level="">—</span>
+      </div>
+      <div class="risk-meta">
+        <p class="risk-label">目前風險等級（依最新一筆紀錄）</p>
+        <p class="risk-detail" id="risk-detail">尚無資料</p>
+        <ol class="decision-path" id="decision-path"></ol>
+      </div>
+    </section>
+
+    <section class="panel chart-panel">
+      <div class="panel-header-row">
+        <h2>近 30 天趨勢</h2>
+        <div class="legend">
+          <span class="legend-item"><i style="background:#1f6f5c"></i>睡眠(h)</span>
+          <span class="legend-item"><i style="background:#c98a1f"></i>步數(÷1000)</span>
+          <span class="legend-item"><i style="background:#9a4ad1"></i>心情</span>
+        </div>
+      </div>
+      <canvas id="trend-chart" height="90"></canvas>
+    </section>
+
+    <main class="layout">
+      <section class="panel form-panel">
+        <h2>新增今日紀錄</h2>
+        <form id="log-form">
+          <label>
+            日期
+            <input type="date" id="log_date" required />
+          </label>
+          <label>
+            睡眠時數（小時）
+            <input type="number" id="sleep_hours" step="0.1" min="0" max="24" placeholder="例如 7.5" required />
+          </label>
+          <label>
+            步數
+            <input type="number" id="steps" step="1" min="0" placeholder="例如 6500" required />
+          </label>
+          <label>
+            心情分數（1～10）
+            <input type="number" id="mood_score" step="1" min="1" max="10" placeholder="例如 7" required />
+          </label>
+          <button type="submit">送出紀錄</button>
+          <p class="form-status" id="form-status"></p>
+        </form>
+      </section>
+
+      <section class="panel history-panel">
+        <div class="panel-header-row">
+          <h2>歷史紀錄</h2>
+          <span class="record-count" id="record-count">0 筆</span>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>日期</th>
+                <th>睡眠</th>
+                <th>步數</th>
+                <th>心情</th>
+                <th>風險</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="log-table-body">
+              <tr><td colspan="6" class="empty-row">載入中...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

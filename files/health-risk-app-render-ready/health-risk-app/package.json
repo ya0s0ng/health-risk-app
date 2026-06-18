@@ -1,0 +1,17 @@
+{
+  "name": "health-risk-app",
+  "version": "1.0.0",
+  "description": "智慧健康日誌與風險評估系統 - 期末挑戰任務 題目A",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node scripts/seed.js",
+    "infogain": "node scripts/infoGain.js"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
